@@ -1,34 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-      <title>Portfolio</title>
-        <%- include('./partials/head.ejs') %>
-    </head>
-    <body class="position-relative" data-bs-spy="scroll">
-      <!-- Navbar -->
-      <%- include('./partials/navbar.ejs') %>  
-      <!-- navbar end -->
+
+        <%- include('../views/home.ejs') %>
+    
+        <%- include('../views/about.ejs') %>      
+
+        <%- include('../views/services.ejs') %>
+ 
+        <%- include('../views/recommendations.ejs') %>
+
+        <%- include('../views/portfolio.ejs') %>
+
+        <%- include('../views/contact.ejs') %>
       
-      <div data-spy="scroll" data-target="#navbar" data-offset="0">
-      <!-- home -->
-        <%- include('./partials/home.ejs') %>
-      <!-- home end -->
-      <!-- about -->
-        <%- include('./partials/about.ejs') %>      
-      <!-- about end -->
-      <!-- services -->
-        <%- include('./partials/services.ejs') %>
-      <!-- services end -->
-      <!-- recommandations -->
-        <%- include('./partials/recommendations.ejs') %>
-      <!-- recommandations end-->
-      <!-- portfolio -->
-        <%- include('./partials/portfolio.ejs') %>
-      <!-- portfolio end -->
-      <!-- contact -->
-        <%- include('./partials/contact.ejs') %>
-      <!-- contact end -->
-      </div>
-      <%- include('./partials/scripts.ejs') %>
-    </body>
 </html>
