@@ -15,7 +15,14 @@ router.post('/', jsonParser, function(req, res) {
     let array = JSON.parse(fs.readFileSync(path.resolve(__dirname, "../data/introductionArray.json")));
     const newArray = array.concat([req.body.newText])
     fs.writeFileSync(path.resolve(__dirname, "../data/introductionArray.json"), JSON.stringify(newArray));
-    res.end();
+    res.json({message: 'Item added', newArray: newArray});
+});
+
+router.delete('/', jsonParser, function(req, res) {
+  let array = JSON.parse(fs.readFileSync(path.resolve(__dirname, "../data/introductionArray.json")));
+  const newArray = array.filter(item => item !== req.body.removeText);
+  fs.writeFileSync(path.resolve(__dirname, "../data/introductionArray.json"), JSON.stringify(newArray));
+  res.json({message: 'Item removed', newArray: newArray});
 });
 
 module.exports = router;
