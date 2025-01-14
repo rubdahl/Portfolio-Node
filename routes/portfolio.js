@@ -6,12 +6,7 @@ var request = require('request');
 var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json()
 
-//download image to teh server
-var download = function(url, filename, callback) {
-    request.head(url, function(err, res, body){
-        request(url).pipe(fs.createWriteStream(path.resolve(__dirname, '../data/img/' + filename))).on('close', callback);
-    });
-};
+
 
 // GET home page
 router.get('/', function(req, res, next) {
@@ -19,7 +14,32 @@ router.get('/', function(req, res, next) {
     res.render('portfolio', { cakes: JSON.parse(data)});
 });
 
+//download image to teh server
+var download = function(url, filename, callback) {
+    request.head(url, function(err, res, body){
+        request(url).pipe(fs.createWriteStream(path.resolve(__dirname, '../data/img/' + filename))).on('close', callback);
+    });
+};
+
 router.post('/', jsonParser, function(req, res, next) {
+    const expectedAttributed = ["url", "name", "alt", "category", "header", "description"]
+    Object.keys(req.body).forEach(param => {
+        if (!(expectedAttributed.includes(param))) {
+            res.status(400).end("wrong atribute");
+        } else {
+            if(req.body[param] == ''){
+                res.status(400).end(param + " must have a value");
+            }
+        }
+    });
+    if (req.body.url == null || req.body.name == null) {
+        res.status(400).end("url/name not provided");
+    }
+    if (req.body.category != null) {
+        if(!(["wedding", "christmas", "birthday", "anniversery" ].includes(req.body.category))) {
+            res.status(400).end("Wrong category provided");
+        }
+    }
     let rawdata = fs.readFileSync(path.resolve(__dirname, "../data/portfolio.json"));
     let portfoliosArray = JSON.parse(rawdata);
     if(portfoliosArray.filter(x => x.name === req.body.name).length == 0) {
