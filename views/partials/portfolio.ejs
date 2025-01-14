@@ -1,4 +1,4 @@
-<section id="portfolio">           
+<section id="portfolio">
   <div class="container">
     <div class="row">
       <div class="col mb-5 text-center">
@@ -16,14 +16,14 @@
       </div>
     </div>
     <div class="row grid">
-    <% cakes.forEach(function(cake) {%>
-    <div class="hide col-lg-4 col-md-6 col-sm-12 wedding">
-      <div class="text-center">
-        <img class="mb-3" src="http://localhost:8080/images/<%=cake.name%>" alt="<%=cake.alt%>" style="width: 100%;">
-        <h4><%=cake.header%></h4>
-        <p><%=cake.description%></p>
-      </div>
+      <% cakes.forEach(function(cake){ %>
+        <div class="hide col-lg-4 col-md-6 col-sm-12 <%=cake.category%>">
+          <div class="text-center">
+            <img class="mb-3" src="http://localhost:8080/images/<%=cake.name%>" alt="<%=cake.alt%>" style="width:100%">
+            <h4><%=cake.header%></h4>
+            <p><%=cake.description%></p>
+          </div>
+        </div>
+      <% });%>
     </div>
-    <%}) %>
-  </div>  
 </section>
