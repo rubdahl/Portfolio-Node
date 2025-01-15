@@ -5,6 +5,8 @@ var path = require('path');
 var request = require('request');
 var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json()
+var ensureLogIn = require('connect-ensure-login').ensureLoggedIn;
+var ensureLoggedIn = ensureLogIn();
 
 
 
@@ -36,7 +38,7 @@ router.post('/', jsonParser, function(req, res, next) {
         res.status(400).end("url/name not provided");
     }
     if (req.body.category != null) {
-        if(!(["wedding", "christmas", "birthday", "anniversery" ].includes(req.body.category))) {
+        if(!(["wedding", "christmas", "birthday", "anniversary" ].includes(req.body.category))) {
             res.status(400).end("Wrong category provided");
         }
     }
@@ -52,7 +54,11 @@ router.post('/', jsonParser, function(req, res, next) {
     res.end();
 })
 
-router.delete('/', jsonParser, function(req, res, next){
+router.delete('/', jsonParser, ensureLoggedIn, function(req, res, next){
+    if(req.body.name == null) {
+        res.status(400).end("Name not provided");
+    }
+
     let rawdata = fs.readFileSync(path.resolve(__dirname, "../data/portfolio.json"));
     let portfoliosArray = JSON.parse(rawdata);
     const newArray = portfoliosArray.filter(x => x.name !== req.body.name)
