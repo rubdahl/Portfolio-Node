@@ -1,5 +1,6 @@
 <section class="login" id="login">
     <div class="col-12 p-5 text-center ">
+        <% if (!user) { %>
         <h1>Sign In</h1>
             <form action="/login/password" method="post">
                 <div class="row">
@@ -14,5 +15,14 @@
                     <button type="submit">Sign In</button>
                 </div>
             </form>
+        <% } %>
+        <% if (user) { %>
+            <div class="row">
+                <p>Hey <%= user.username%>!</p>
+                <form action="/login/logout" method="post">
+                    <button class="logout" type="submit">Sign Out</button>
+                </form>
+            </div>
+            <% } %>
     </div>
 </section>
